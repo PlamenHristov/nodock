@@ -69,7 +69,6 @@ services:
         build:
             context: ./certbot
         links:
-            - apache
             - nginx
         volumes_from:
             - volumes
