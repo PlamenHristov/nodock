@@ -5,6 +5,7 @@ services:
       build:
           args:
               - WEB_SSL=true
+              - MONGODB=${MONGODB}
   certbot:
       environment:
         - CN=fastcheckout.me
