@@ -1,9 +1,11 @@
 # docker-compose.override.yml
-nginx:
-    build:
-        args:
-            - WEB_SSL=true
-certbot:
-    environment:
+version: "2"
+services:
+  nginx:
+      build:
+          args:
+              - WEB_SSL=true
+  certbot:
+      environment:
         - CN=fastcheckout.me
         - EMAIL=hristov.reading@gmail.com
