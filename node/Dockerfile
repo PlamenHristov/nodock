@@ -13,13 +13,6 @@ ENV YARN=$YARN
 ENV PROJECT_PATH=$PROJECT_PATH
 ENV NODE_ENV=$NODE_ENV
 
-# Add
-RUN groupadd -r www-app &&\
-    useradd -r -g www-app www-app
-
-RUN mkdir -p /home/www-app &&\
-    chmod 777 /home/www-app -R
-
 # Install the specified NODE_VERSION or grab latest
 RUN n "$NODE_VERSION"
 

@@ -4,20 +4,25 @@ services:
 
     node:
         build:
-            context: ./node
+            context: node
             args:
                 - NODE_VERSION=latest
                 - PROJECT_PATH=/opt/app/
                 - NODE_ENV=production
                 - YARN=false
+
         volumes:
             - ../:/opt/app
-        entrypoint: run-nodock "node index.js"
+        entrypoint: run-nodock "node app.js"
         tty: true
+        links:
+          - mongo
+        environment:
+          - MONGODB=mongodb://mongo:27017/fastserve
 
     mysql:
         build:
-            context: ./mysql
+            context: mysql
             args:
                 - MYSQL_DATABASE=default_database
                 - MYSQL_USER=default_user
@@ -29,7 +34,8 @@ services:
             - "3306"
 
     mongo:
-        build: ./mongo
+        build: mongo
+        command: "mongod --port 27017 --bind_ip_all"
         expose:
             - "27017"
         volumes_from:
@@ -37,7 +43,7 @@ services:
 
     nginx:
         build:
-            context: ./nginx
+            context: nginx
             args:
                 - WEB_REVERSE_PROXY_PORT=8000
                 - WEB_SSL=false
@@ -52,7 +58,7 @@ services:
 
     apache:
         build:
-            context: ./apache
+            context: apache
             args:
                 - WEB_REVERSE_PROXY_PORT=8000
                 - WEB_SSL=false
@@ -67,7 +73,7 @@ services:
 
     certbot:
         build:
-            context: ./certbot
+            context: certbot
         links:
             - nginx
         volumes_from:
@@ -75,7 +81,7 @@ services:
 
     rabbitmq:
         build:
-            context: ./rabbitmq
+            context: rabbitmq
             args:
                 - MANAGEMENT=false
                 - FEDERATION=false
@@ -86,7 +92,7 @@ services:
 
     workspace:
         build:
-            context: ./workspace
+            context: workspace
             args:
                 - NODE_VERSION=latest
                 - TZ=UTC
@@ -99,7 +105,7 @@ services:
 
     memcached:
         build:
-            context: ./memcached
+            context: memcached
         volumes_from:
             - volumes
         expose:
@@ -107,7 +113,7 @@ services:
 
     rethinkdb:
         build:
-            context: ./rethinkdb
+            context: rethinkdb
         volumes:
             - ./data/rethinkdb:/data
         expose:
@@ -122,6 +128,6 @@ services:
             - ./certbot/letsencrypt/:/var/www/letsencrypt
             - ./certbot/certs/:/var/certs
             - ./data/mysql:/var/lib/mysql
-            - ./data/mongo:/var/lib/mongodb
+            - ./data/mongo:/home/mongo/mongodb
             - ./data/logs/nginx/:/var/log/nginx
             - ./data/logs/apache/:/usr/local/apache2/logs

@@ -11,9 +11,9 @@ fi
 cd $PROJECT_PATH
 
 if [[ $YARN = true ]]; then
-    su -c "cd $PROJECT_PATH; yarn" -s /bin/bash www-app
+    su -c "cd $PROJECT_PATH; yarn" -s /bin/bash root
 else
-    su -c "cd $PROJECT_PATH; npm i --force" -s /bin/bash www-app
+    su -c "cd $PROJECT_PATH; npm i --force" -s /bin/bash root
 fi
 
-su -c "cd $PROJECT_PATH; $SCRIPT" -s /bin/bash www-app
+su -c "cd $PROJECT_PATH; $SCRIPT" -s /bin/bash root

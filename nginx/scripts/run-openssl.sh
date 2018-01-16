@@ -3,7 +3,7 @@
 if [[ "$WEB_SSL" = true && "$NO_DEFAULT" = false ]]; then
     if [[ "$SELF_SIGNED" = true ]]; then
         echo "---------------------------------------------------------"
-        echo "APACHE: Generating certificates"
+        echo "NGINX: Generating certificates"
         echo "---------------------------------------------------------"
         openssl req \
             -new \
@@ -18,7 +18,7 @@ if [[ "$WEB_SSL" = true && "$NO_DEFAULT" = false ]]; then
         chown www-data:www-data /etc/ssl/privkey1.pem
     else
         echo "---------------------------------------------------------"
-        echo "APACHE: Using certificates in 'nodock/apache/certs/'"
+        echo "NGINX: Using certificates in 'nodock/apache/certs/'"
         echo "---------------------------------------------------------"
         if [ -e /var/certs/cert1.pem ]; then
             cp /var/certs/cert1.pem /etc/ssl/cert1.pem

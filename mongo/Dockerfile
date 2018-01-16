@@ -1,9 +1,3 @@
-FROM mongo:3.3
+FROM mongo:latest
 
-# Add mongo user
-RUN groupadd -r mongo &&\
-    useradd -r -g mongo mongo
-    
-USER mongo
-
-CMD mongod --dbpath=/var/lib/mongodb
+CMD mongod --bind_ip_all --dbpath=/home/mongo/mongodb
