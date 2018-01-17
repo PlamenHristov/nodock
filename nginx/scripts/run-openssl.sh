@@ -20,11 +20,11 @@ if [[ "$WEB_SSL" = true && "$NO_DEFAULT" = false ]]; then
         echo "---------------------------------------------------------"
         echo "NGINX: Using certificates in 'nodock/apache/certs/'"
         echo "---------------------------------------------------------"
-        if [ -e /var/certs/cert1.pem ]; then
-            cp /var/certs/cert1.pem /etc/ssl/cert1.pem
+        if [ -e /var/certs/cert.pem ]; then
+            cp /var/certs/cert.pem /etc/ssl/cert.pem
         fi
-        if [ -e /var/certs/privkey1.pem ]; then
-            cp /var/certs/privkey1.pem /etc/ssl/privkey1.pem
+        if [ -e /var/certs/privkey.pem ]; then
+            cp /var/certs/privkey.pem /etc/ssl/privkey.pem
         fi
     fi
 fi

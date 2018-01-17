@@ -3,6 +3,7 @@ version: '2'
 services:
 
     node:
+        restart: always
         build:
             context: node
             args:
@@ -19,6 +20,7 @@ services:
           - mongo
         environment:
           - MONGODB=mongodb://mongo:27017/fastserve
+          - PORT=8000
 
     mysql:
         build:
@@ -34,6 +36,7 @@ services:
             - "3306"
 
     mongo:
+        restart: always
         build: mongo
         command: "mongod --port 27017 --bind_ip_all"
         expose:
@@ -42,6 +45,9 @@ services:
             - volumes
 
     nginx:
+        restart: always
+        links:
+          - mongo
         build:
             context: nginx
             args:
@@ -72,6 +78,7 @@ services:
         tty: true
 
     certbot:
+        restart: always
         build:
             context: certbot
         links:
